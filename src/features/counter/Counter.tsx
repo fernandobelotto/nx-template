@@ -1,70 +1,43 @@
-import { useState } from 'react'
-
-import { useAppSelector, useAppDispatch } from '../../hooks'
+import {
+  Button, Center,
+  Heading,
+  HStack
+} from "@chakra-ui/react";
+import { useAppDispatch, useAppSelector } from "../../store";
 import {
   decrement,
-  increment,
-  incrementByAmount,
-  incrementAsync,
-  incrementIfOdd,
-  selectCount,
-} from './counterSlice'
-import styles from './Counter.module.css'
+  increment, selectCount
+} from "./counterSlice";
 
-function Counter() {
-  const dispatch = useAppDispatch()
-  const count = useAppSelector(selectCount)
-  const [incrementAmount, setIncrementAmount] = useState('2')
-
-  const incrementValue = Number(incrementAmount) || 0
-
+export default function Counter() {
+  const dispatch = useAppDispatch();
+  const count = useAppSelector(selectCount);
   return (
-    <div>
-      <div className={styles.row}>
-        <button
-          className={styles.button}
-          aria-label="Decrement value"
-          onClick={() => dispatch(decrement())}
+    <>
+      <Center
+        h="100vh"
+        w="100%"
+      >
+        <HStack
+          w="100%"
+          justifyContent="center"
+          display="flex"
         >
-          -
-        </button>
-        <span className={styles.value}>{count}</span>
-        <button
-          className={styles.button}
-          aria-label="Increment value"
-          onClick={() => dispatch(increment())}
-        >
-          +
-        </button>
-      </div>
-      <div className={styles.row}>
-        <input
-          className={styles.textbox}
-          aria-label="Set increment amount"
-          value={incrementAmount}
-          onChange={(e) => setIncrementAmount(e.target.value)}
-        />
-        <button
-          className={styles.button}
-          onClick={() => dispatch(incrementByAmount(incrementValue))}
-        >
-          Add Amount
-        </button>
-        <button
-          className={styles.asyncButton}
-          onClick={() => dispatch(incrementAsync(incrementValue))}
-        >
-          Add Async
-        </button>
-        <button
-          className={styles.button}
-          onClick={() => dispatch(incrementIfOdd(incrementValue))}
-        >
-          Add If Odd
-        </button>
-      </div>
-    </div>
-  )
+          <Button
+            aria-label="Decrement value"
+            onClick={() => dispatch(decrement())}
+          >
+            -
+          </Button>
+          <Heading colorScheme="purple">{count}</Heading>
+          <Button
+            aria-label="Increment value"
+            onClick={() => dispatch(increment())}
+          >
+            +
+          </Button>
+        </HStack>
+      </Center>
+    </>
+  );
 }
-
-export default Counter
